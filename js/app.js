@@ -1,13 +1,25 @@
 /*
  * Create a list that holds all of your cards
  */
+ /* first commit: add open, show to card's class list on 'click' event */
+ let cardArray = document.getElementsByClassName('card');
 
+ for(let i=0; i<listItems.length; i++){
+      cardArray[i].addEventListener('click',function(){
+          cardArray[i].classList.add('open','show');
+      })
+  }
 
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
+ */
+ /* Kirby's comments:
+ -EventListener: on 'click' change class to 'card open show'
+ -Match: when two 'i' (icons) match, change class to 'card match'
+
  */
 
 // Shuffle function from http://stackoverflow.com/a/2450976
