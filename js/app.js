@@ -35,6 +35,7 @@ function noMatch(openCards){
 
  for(let i=0; i<cardArray.length; i++){
       cardArray[i].addEventListener('click',function(){
+        if (!cardArray[i].classList.contains('open')){
           if (openCards.length < 2){
           cardArray[i].classList.add('open','show');
           element = cardArray[i].firstElementChild
@@ -48,6 +49,7 @@ function noMatch(openCards){
               openCards = [];
             }
           }
+        }
       })/* End of EventListener block */
   }
 /*  console.log(openCards); */
