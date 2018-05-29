@@ -1,7 +1,29 @@
 /*
  * Create a list that holds all of your cards
  */
- /* first commit: add open, show to card's class list on 'click' event */
+ /* dynamically generate cards */
+var allcards = document.querySelectorAll('.card i');
+var deck = document.querySelector('.deck')
+var cards = [];
+allcards.forEach(function(card){
+    cards.push(card.className);
+});
+cardHTML = [];
+function generateHTML(cards){
+  cards.forEach(function(cardName){
+    cardHTML.push(`<li class="card">
+        <i class="${cardName}"></i>
+    </li>`)
+  })
+}
+
+generateHTML(cards);
+
+shuffle(cardHTML);
+
+deck.innerHTML = cardHTML.join('');
+
+
  let cardArray = document.getElementsByClassName('card');
  let openCards = [];
  /* Side note: openCards[0].parentElement will give you: <li class=​"card open show">​…​</li>​ */
