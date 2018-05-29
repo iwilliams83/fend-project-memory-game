@@ -6,27 +6,31 @@
  let openCards = [];
  /* Side note: openCards[0].parentElement will give you: <li class=​"card open show">​…​</li>​ */
 
-function matchingCards(openCards){
-  console.log("I'm a matching card function!");
-  var match = openCards[0].className === openCards[1].className;
-  if (match) {
-    console.log('these cards match');
-     /*for each element in OpenCards array, change the parent element's classList to 'card match'*/
-    for (i in openCards){
-      openCards[i].parentElement.classList.remove('open', 'show')
-      openCards[i].parentElement.classList.add('match')
-    }
-    while (openCards.length) { openCards.pop(); }
- }
+function removeOpenShow(element){
+  element.parentElement.classList.remove('open', 'show');
 }
 
-function noMatch(openCards){
+function cardsMatch(openCards){
   var match = openCards[0].className === openCards[1].className;
-  if (match === false){
-    console.log("I'm here in case the cards don't match");
+  if (match) {
+    for (i in openCards){
+      removeOpenShow(openCards[i]);
+      openCards[i].parentElement.classList.add('match')
+    }
+    return true;
   }
 }
 
+function noMatch(openCards){
+  var different = openCards[0].className !== openCards[1].className;
+  if (different){
+    setTimeout(function(){
+      for (i in openCards){
+        removeOpenShow(openCards[i]);
+      }
+    }, 800);
+  }
+}
 
 
  for(let i=0; i<cardArray.length; i++){
@@ -37,13 +41,16 @@ function noMatch(openCards){
           openCards.push(element)
           }
           if (openCards.length == 2){
-            noMatch(openCards);
-            matchingCards(openCards);
-
+            if (cardsMatch(openCards)){
+              openCards = [];
+            } else {
+              noMatch(openCards)
+              openCards = [];
             }
+          }
       })/* End of EventListener block */
   }
-  console.log(openCards);
+/*  console.log(openCards); */
 
 /*
  * Display the cards on the page
