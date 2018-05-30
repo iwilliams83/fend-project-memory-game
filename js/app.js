@@ -1,30 +1,34 @@
 /*
  * Create a list that holds all of your cards
  */
- /* dynamically generate cards */
-let win = [];
-var allcards = document.querySelectorAll('.card i'); /*grab all the card elements*/
-var deck = document.querySelector('.deck')
-var cards = [];
+let stars = document.querySelectorAll('.fa-star');
+let moves = 0;
+let matchCount = 0;
+let allcards = document.querySelectorAll('.card i'); /*grab all the card elements*/
+let deck = document.querySelector('.deck')
+let cards = [];
+
 allcards.forEach(function(card){
     cards.push(card.className); /*grab all the classnames of the card elements*/
 });
-cardHTML = [];
+
+let cardHTML = [];
+
 function generateHTML(cards){
   cards.forEach(function(cardName){
     cardHTML.push(`<li class="card">
         <i class="${cardName}"></i>
-    </li>`)
+    </li>`) //push card HTML into actual array object to be used with shuffle function
   })
 }
 
-generateHTML(cards);
+generateHTML(cards); //call generateHTML to create array of cardHTML
 
-shuffle(cardHTML);
+shuffle(cardHTML); //shuffle cardHTML array
 
-deck.innerHTML = cardHTML.join('');
+deck.innerHTML = cardHTML.join(''); //replace current deck with shuffled deck
 
-
+//start game
  let cardArray = document.querySelectorAll('.card'); // Array of HTML Card Elements
  let openCards = [];
 
@@ -54,30 +58,50 @@ function noMatch(openCards){
   }
 }
 
+function starRating(moves){
+  let rating = 3;
+  if (moves > 15 && moves < 21){
+    stars[0].remove();
+    rating = 2;
+  }
+  if (moves > 20){
+    stars[1].remove();
+    rating = 1;
+  }
+  return rating;
+}
+
 
  for(let i=0; i<cardArray.length; i++){
       cardArray[i].addEventListener('click',function(){
-        if (!cardArray[i].classList.contains('open')){
+        if ((!cardArray[i].classList.contains('open'))&&(!cardArray[i].classList.contains('match'))){
           if (openCards.length < 2){
           element = cardArray[i].firstElementChild
           openCards.push(element)
           cardArray[i].classList.add('open','show');
           }
           if (openCards.length == 2){
+            moves += 1;
+            starRating(moves);
             if (cardsMatch(openCards)){
               openCards = [];
-              win.push('match');
-              if (win.length === 8){
-                console.log("YOU WON!!!")
+              matchCount += 1;
+              if (matchCount === 8){
+                let rating = starRating(moves);
+                console.log(`You won with ${moves} moves and ${rating} stars!`);
+                  // DISPLAY MODAL
               }
             } else {
               noMatch(openCards)
               openCards = [];
             }
+            document.querySelector('.moves').innerText = moves;
           }
         }
       })/* End of EventListener block */
   }
+
+
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -105,9 +129,6 @@ function shuffle(array) {
  -Match: when two 'i' (icons) match, change class to 'card match'
 
  */
-
-
-
 
 /*
  * set up the event listener for a card. If a card is clicked:

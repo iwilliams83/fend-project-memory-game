@@ -101,9 +101,18 @@ h1 {
 .score-panel .stars li {
     list-style: none;
     display: inline-block;
+    color: teal;
+}
+
+.restart .fa{
+  color: teal;
 }
 
 .score-panel .restart {
     float: right;
     cursor: pointer;
+}
+
+.modal {
+  display: none;
 }
