@@ -2,11 +2,12 @@
  * Create a list that holds all of your cards
  */
  /* dynamically generate cards */
-var allcards = document.querySelectorAll('.card i');
+let win = [];
+var allcards = document.querySelectorAll('.card i'); /*grab all the card elements*/
 var deck = document.querySelector('.deck')
 var cards = [];
 allcards.forEach(function(card){
-    cards.push(card.className);
+    cards.push(card.className); /*grab all the classnames of the card elements*/
 });
 cardHTML = [];
 function generateHTML(cards){
@@ -24,9 +25,8 @@ shuffle(cardHTML);
 deck.innerHTML = cardHTML.join('');
 
 
- let cardArray = document.getElementsByClassName('card');
+ let cardArray = document.querySelectorAll('.card'); // Array of HTML Card Elements
  let openCards = [];
- /* Side note: openCards[0].parentElement will give you: <li class=​"card open show">​…​</li>​ */
 
 function removeOpenShow(element){
   element.parentElement.classList.remove('open', 'show');
@@ -50,7 +50,7 @@ function noMatch(openCards){
       for (i in openCards){
         removeOpenShow(openCards[i]);
       }
-    }, 800);
+    }, 500);
   }
 }
 
@@ -59,13 +59,17 @@ function noMatch(openCards){
       cardArray[i].addEventListener('click',function(){
         if (!cardArray[i].classList.contains('open')){
           if (openCards.length < 2){
-          cardArray[i].classList.add('open','show');
           element = cardArray[i].firstElementChild
           openCards.push(element)
+          cardArray[i].classList.add('open','show');
           }
           if (openCards.length == 2){
             if (cardsMatch(openCards)){
               openCards = [];
+              win.push('match');
+              if (win.length === 8){
+                console.log("YOU WON!!!")
+              }
             } else {
               noMatch(openCards)
               openCards = [];
@@ -74,7 +78,21 @@ function noMatch(openCards){
         }
       })/* End of EventListener block */
   }
-/*  console.log(openCards); */
+
+// Shuffle function from http://stackoverflow.com/a/2450976
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+    while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+    return array;
+}
+
+ // Side note: openCards[0].parentElement will give you: <li class=​"card open show">​…​</li>​
 
 /*
  * Display the cards on the page
@@ -88,20 +106,7 @@ function noMatch(openCards){
 
  */
 
-// Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
 
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
-
-    return array;
-}
 
 
 /*
