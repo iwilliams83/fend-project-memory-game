@@ -114,5 +114,59 @@ h1 {
 }
 
 .modal {
-  display: none;
+  /*display: none;*/
+  position: fixed;
+  z-index:1;
+  left: auto;
+  top: auto;
+  height: 50%;
+  width:55%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.closeBtn {
+  float: right;
+  font-size: 35px;
+  color: white;
+  margin-right: 13px;
+}
+
+.closeBtn:hover{
+  color: magenta;
+  cursor: pointer;
+}
+
+.modal-body {
+  color: white;
+  padding: 60px;
+  text-align: center;
+}
+
+.modal-body h2{
+  font-size: 40px;
+  margin-top: 16px;
+  margin-bottom: 20px;
+}
+
+.modal-body p{
+  margin-bottom: 32px;
+}
+
+.modal-body button {
+  font-size: 30px;
+  border-color: slateblue;
+  border-style: solid;
+  border-width: 5px;
+  border-radius: .2em;
+  background-color: mediumslateblue;
+  color: white;
+  padding: 10px 15px;
+  font-weight: bold;
+  font-family: inherit;
+}
+
+#modalBtn:hover{
+  color: indigo;
+  cursor: pointer;
 }

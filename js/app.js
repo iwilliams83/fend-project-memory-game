@@ -1,12 +1,20 @@
 /*
  * Create a list that holds all of your cards
  */
+// **** Variables definitions ****
 let stars = document.querySelectorAll('.fa-star');
 let moves = 0;
 let matchCount = 0;
 let allcards = document.querySelectorAll('.card i'); /*grab all the card elements*/
 let deck = document.querySelector('.deck')
 let cards = [];
+
+// **** Function definitions ****
+
+
+
+
+// **** Game Logic ****
 
 allcards.forEach(function(card){
     cards.push(card.className); /*grab all the classnames of the card elements*/
@@ -76,9 +84,9 @@ function starRating(moves){
       cardArray[i].addEventListener('click',function(){
         if ((!cardArray[i].classList.contains('open'))&&(!cardArray[i].classList.contains('match'))){
           if (openCards.length < 2){
-          element = cardArray[i].firstElementChild
-          openCards.push(element)
-          cardArray[i].classList.add('open','show');
+            element = cardArray[i].firstElementChild
+            openCards.push(element)
+            cardArray[i].classList.add('open','show');
           }
           if (openCards.length == 2){
             moves += 1;
@@ -100,8 +108,6 @@ function starRating(moves){
         }
       })/* End of EventListener block */
   }
-
-
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
