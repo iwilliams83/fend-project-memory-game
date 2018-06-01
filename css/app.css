@@ -113,33 +113,41 @@ h1 {
     cursor: pointer;
 }
 
+.moves{
+  margin-right: 5px;
+}
+
+.timer{
+  margin: 0px 5px 0px 15px;
+}
+
 .modal {
   display: none;
   position: fixed;
   z-index:1;
   left: auto;
   top: auto;
-  height: 50%;
+  height: 52%;
   width:55%;
   overflow: auto;
   background-color: rgba(0,0,0,0.5);
 }
 
-.closeBtn {
+#close-modal {
   float: right;
   font-size: 35px;
   color: white;
   margin-right: 13px;
 }
 
-.closeBtn:hover{
+#close-modal:hover{
   color: magenta;
   cursor: pointer;
 }
 
 .modal-body {
   color: white;
-  padding: 60px;
+  padding:35px;
   text-align: center;
 }
 
@@ -152,6 +160,10 @@ h1 {
 .modal-body p{
   margin-bottom: 32px;
 }
+
+/* .gameTime{
+  margin-left: 5px;
+} */
 
 #replayBtn {
   font-size: 30px;

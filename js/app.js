@@ -1,28 +1,34 @@
 /*
  * Create a list that holds all of your cards
  */
-// **** Variables definitions ****
+// Variables
 let stars = document.querySelectorAll('.fa-star');
 let moves = 0;
 let matchCount = 0;
-let allcards = document.querySelectorAll('.card i'); /*grab all the card elements*/
+let allcards = document.querySelectorAll('.card i'); //grab card icons to generate card HTML
 let deck = document.querySelector('.deck')
 let cards = [];
 
-let startTime, endTime;
-
-//modal
+// variables for modal:
 let modal = document.querySelector('.modal');
 let modalMsg = document.querySelector('.modal-msg');
+let quitModal = document.getElementById('close-modal')
 
+//function to open/display modal upon winning the game:
 function openModal(moves, modalMsg){
   let rating = starRating(moves);
   modalMsg.innerText = `You won with ${moves} moves and ${rating} stars!`;
   modal.style.display = 'block';
 }
 
-// **** Function definitions ****
+//event listener to close modal by clicking on the 'x':
+quitModal.addEventListener('click', closeModal);
+//closeModal function:
+function closeModal(){
+  modal.style.display = 'none';
+}
 
+//Page loads with default deck, which is then shuffled
 allcards.forEach(function(card){
     cards.push(card.className); /*grab all the classnames of the card elements*/
 });
@@ -43,9 +49,9 @@ shuffle(cardHTML); //shuffle cardHTML array
 
 deck.innerHTML = cardHTML.join(''); //replace current deck with shuffled deck
 
-//start game
- let cardArray = document.querySelectorAll('.card'); // Array of HTML Card Elements
- let openCards = [];
+//start game with shuffled deck
+let cardArray = document.querySelectorAll('.card'); // Array of HTML Card Elements
+let openCards = [];
 
 function removeOpenShow(element){
   element.parentElement.classList.remove('open', 'show');
@@ -86,16 +92,51 @@ function starRating(moves){
   return rating;
 }
 
-function startTimer(){
-  startTime = new Date().getTime();
-  console.log('Starting the Timer!');
-}
+// TIMER:
+let gameOver = 0;
+let timeElement = document.getElementById('time');
+let gameTime = document.querySelector('.gameTime');
 
-function getTotalTime(){
-  let totalTime = startTime - new Date().getTime();
-  console.log(`The total time is .... ${totalTime}...CONVERT MEEEEEE!!!!!`);
-  return totalTime;
-}
+function startTimer() {
+  let currentTimer = 0;
+  let interval = 0;
+  let lastUpdateTime = new Date().getTime();
+
+    function update () {
+        var now = new Date().getTime(),
+            dt = now - lastUpdateTime;
+
+        currentTimer += dt;
+
+        var time = new Date(currentTimer);
+
+        mins = time.getMinutes();
+        secs = time.getSeconds();
+        cents = Math.floor(time.getMilliseconds() / 10);
+        timeElement.innerText = mins+' : '+secs+' : '+cents;
+        lastUpdateTime = now;
+
+        if (gameOver === 1){
+          stop();
+          gameTime.innerText = 'Your time was '+mins+' : '+secs+' : '+cents+'.';
+        }
+    }
+
+    function start() {
+        if (!interval) {
+            lastUpdateTime = new Date().getTime();
+            interval = setInterval(update, 1);
+        }
+    }
+
+    function stop() {
+        clearInterval(interval);
+        interval = 0;
+    }
+
+    start();
+
+  }
 
 // **** Game Logic ****
 let isTImerStarted = false;
@@ -121,15 +162,15 @@ let isTImerStarted = false;
               matchCount += 1;
               if (matchCount === 8){
                 // Stop Timer
-                let totalTime = getTotalTime();
-                console.log(`The total time BEFORE THE MODAL .... ${totalTime}...CONVERT MEEEEEE!!!!!`);
+                gameOver = 1;
+                //display modal
                 openModal(moves, modalMsg);
               }
             } else {
               noMatch(openCards)
               openCards = [];
             }
-            document.querySelector('.moves').innerText = moves;
+            document.querySelector('.count').innerText = moves;
           }
         }
       })/* End of EventListener block */
