@@ -9,12 +9,19 @@ let allcards = document.querySelectorAll('.card i'); /*grab all the card element
 let deck = document.querySelector('.deck')
 let cards = [];
 
+let startTime, endTime;
+
+//modal
+let modal = document.querySelector('.modal');
+let modalMsg = document.querySelector('.modal-msg');
+
+function openModal(moves, modalMsg){
+  let rating = starRating(moves);
+  modalMsg.innerText = `You won with ${moves} moves and ${rating} stars!`;
+  modal.style.display = 'block';
+}
+
 // **** Function definitions ****
-
-
-
-
-// **** Game Logic ****
 
 allcards.forEach(function(card){
     cards.push(card.className); /*grab all the classnames of the card elements*/
@@ -79,9 +86,27 @@ function starRating(moves){
   return rating;
 }
 
+function startTimer(){
+  startTime = new Date().getTime();
+  console.log('Starting the Timer!');
+}
 
+function getTotalTime(){
+  let totalTime = startTime - new Date().getTime();
+  console.log(`The total time is .... ${totalTime}...CONVERT MEEEEEE!!!!!`);
+  return totalTime;
+}
+
+// **** Game Logic ****
+let isTImerStarted = false;
  for(let i=0; i<cardArray.length; i++){
       cardArray[i].addEventListener('click',function(){
+        // Start Timer after first card is clicked
+        if(isTImerStarted === false) {
+          startTimer();
+          isTImerStarted = true;
+        }
+
         if ((!cardArray[i].classList.contains('open'))&&(!cardArray[i].classList.contains('match'))){
           if (openCards.length < 2){
             element = cardArray[i].firstElementChild
@@ -95,9 +120,10 @@ function starRating(moves){
               openCards = [];
               matchCount += 1;
               if (matchCount === 8){
-                let rating = starRating(moves);
-                console.log(`You won with ${moves} moves and ${rating} stars!`);
-                  // DISPLAY MODAL
+                // Stop Timer
+                let totalTime = getTotalTime();
+                console.log(`The total time BEFORE THE MODAL .... ${totalTime}...CONVERT MEEEEEE!!!!!`);
+                openModal(moves, modalMsg);
               }
             } else {
               noMatch(openCards)
@@ -122,18 +148,13 @@ function shuffle(array) {
     return array;
 }
 
- // Side note: openCards[0].parentElement will give you: <li class=​"card open show">​…​</li>​
+
 
 /*
  * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
+ *   - shuffle the list of cards using the provided "shuffle" method
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
- */
- /* Kirby's comments:
- -EventListener: on 'click' change class to 'card open show'
- -Match: when two 'i' (icons) match, change class to 'card match'
-
  */
 
 /*

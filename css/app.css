@@ -114,7 +114,7 @@ h1 {
 }
 
 .modal {
-  /*display: none;*/
+  display: none;
   position: fixed;
   z-index:1;
   left: auto;
@@ -153,7 +153,7 @@ h1 {
   margin-bottom: 32px;
 }
 
-.modal-body button {
+#replayBtn {
   font-size: 30px;
   border-color: slateblue;
   border-style: solid;
@@ -166,7 +166,7 @@ h1 {
   font-family: inherit;
 }
 
-#modalBtn:hover{
+#replayBtn:hover{
   color: indigo;
   cursor: pointer;
 }
